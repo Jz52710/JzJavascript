@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+<table class="table table-striped table-bordered" id="my">
+        <tr>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>性别</th>
+            <th>练习方式</th>
+            <th>操作</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td class="del">
+                <input type="button" value="删除" class="btn btn-danger" onclick="popValue">
+            </td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td class="del">
+                <input type="button" value="删除" class="btn btn-danger" onclick="popValue">
+            </td>
+        </tr>
+
+    </table>
+    <input type="button" value="添加" class="btn btn-success" style="width:50%;margin:0 auto;display: block;" onclick="addValue()">
+</body>
+<script>
+    // 事件委派
+    let table = document.querySelector(".table")
+    table.ondblclick= function(event){
+        let target = event.target
+        if(target.nodeName == "TD" && target.className!="del"){
+            changeValue(target)
+        }
+    }
+    // 实现修改内容
+    function changeValue(item){
+        let oldtext = item.innerText
+        let input = document.createElement("input")
+        item.innerText = ""
+        input.value = oldtext
+        input.onchange = function(){ // 当失去焦点并且内容发生改变时触发
+            item.innerText = this.value
+        }
+        item.appendChild(input)
+        input.focus()
+
+    }
+    //添加
+    function addValue() {
+        let table=document.getElementById("my");
+	    let row=table.insertRow();
+	    let cell1=row.insertCell(0);
+	    let cell2=row.insertCell(1);
+	    let cell3=row.insertCell(2);
+	    let cell4=row.insertCell(3);
+	    let cell5=row.insertCell(4);
+	    cell1.innerHTML="1";
+	    cell2.innerHTML="2";
+	    cell3.innerHTML="3";
+	    cell4.innerHTML="4";
+	    cell5.innerHTML="<input type=\"button\" value=\"删除\" class=\"btn btn-danger\" onclick=\"popValue()\">";
+    }
+    //删除
+    function popValue() {
+        document.getElementById("my").deleteRow(1);
+    }
+    </script>
+</body>
+</html>
